@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   else {
     const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/passport";
     mongoose
-      .connect(mongoUrl, { useMongoClient: true })
+      .connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
       .then(() => next())
       .catch(err => console.error(`Mongoose Error: ${err.stack}`));
   }

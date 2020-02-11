@@ -66,8 +66,12 @@ function authenticate(passport) {
 
   // Error Handler
   router.use((err, req, res) => {
-    console.error(err.stack);
-    res.status(500).end(err.stack);
+//    console.log(req.req.originalUrl);
+    if (req.req.originalUrl!=='/favicon.ico') // ignore this request for now
+    {
+      console.error(err.stack);
+      res.status(500).end(err.stack);
+    }
   });
 
   return router;

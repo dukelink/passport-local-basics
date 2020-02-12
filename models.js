@@ -19,5 +19,19 @@ UserSchema.virtual("password").set(function(value) {
 });
 
 const User = mongoose.model("User", UserSchema);
+/*
+const User = {
+  findOne : function(user) {
+    const {username} = user;
+    const prom = new Promise(
+      function resolve(value) {
 
+      }, 
+      function reject(reason) {
+
+      });
+    return prom;
+  }
+}
+*/
 module.exports = User;

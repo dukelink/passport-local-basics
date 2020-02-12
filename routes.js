@@ -46,7 +46,7 @@ function authenticate(passport) {
     User.create({ username, password })
       .then(user => {
         req.login(user, err => {
-          if (err) next(err);
+          if (err) next(err); // REVIEW: Not sure what this is about
           else res.redirect("/");
         });
       })

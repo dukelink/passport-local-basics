@@ -1,7 +1,9 @@
+const bcrypt = require("bcrypt");
+
+/*
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const uniqueValidator = require("mongoose-unique-validator");
-const bcrypt = require("bcrypt");
 
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
@@ -19,19 +21,36 @@ UserSchema.virtual("password").set(function(value) {
 });
 
 const User = mongoose.model("User", UserSchema);
-/*
+*/
+
+
 const User = {
-  findOne : function(user) {
+  findOne : user => {
     const {username} = user;
-    const prom = new Promise(
-      function resolve(value) {
-
-      }, 
-      function reject(reason) {
-
-      });
+    const prom = new Promise((resolve,reject)=>{
+      if (username==="wlotherington243") {
+        const passwordHash = "$2b$12$uz3GXpgzpQs1C7OLQRjYZOeCtdz6hvClMJ/PrFjOYgLI67AWcugeG";
+        resolve({
+          _id: '5e4325919280f51b9486d106',
+          username:"wlotherington243",
+          passwordHash,
+          validPassword : (password) => bcrypt.compareSync(password, passwordHash) // TODO: test with and without 'this'
+        });
+      } else
+        reject("Invalid user name");
+    })
     return prom;
+  },
+  findById : (userId, cb) => {
+    if (userId==='5e4325919280f51b9486d106')
+      cb(null, {
+        _id: '5e4325919280f51b9486d106',
+        username: 'wlotherington243',
+        passwordHash: '$2b$12$uz3GXpgzpQs1C7OLQRjYZOeCtdz6hvClMJ/PrFjOYgLI67AWcugeG',      
+      })
+    else
+      cb("user ID not found",null);
   }
 }
-*/
+
 module.exports = User;

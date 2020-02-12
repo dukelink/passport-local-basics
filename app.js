@@ -127,6 +127,7 @@ const flash = require("express-flash-messages");
 app.use(flash());
 
 // Connect to Mongoose
+/*
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 app.use((req, res, next) => {
@@ -139,6 +140,7 @@ app.use((req, res, next) => {
       .catch(err => console.error(`Mongoose Error: ${err.stack}`));
   }
 });
+*/
 
 // Passport
 const passport = require("passport");
@@ -158,13 +160,16 @@ passport.deserializeUser(function(userId, done) {
 
   User.findById(userId, (err, user) => {
     console.log(`passport.deserializeUser() User.findById() callback; user=\n${user}\n\n`);
-    return done(err, user) 
+    done(err, user);
   });
 });
 
 // Passport Local
 const LocalStrategy = require("passport-local").Strategy;
 const local = new LocalStrategy((username, password, done) => {
+
+console.log('**************HERE')
+
   User.findOne({ username })
     .then(user => {
 

@@ -17,7 +17,7 @@ const loggedOutOnly = (req, res, next) => {
 function authenticate(passport) {
   // Main Page
   router.get("/", loggedInOnly, (req, res) => {
-    res.render("index", { username: req.user.username });
+    res.render("index", { username: req.user.username, user_string: JSON.stringify(req.user) });
   });
 
   // Login View

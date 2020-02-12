@@ -149,9 +149,9 @@ app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
 
-  console.log(`passport.serializeUser() user=\n${user}\n\n`);
+  console.log(`passport.serializeUser() user=\n${JSON.stringify(user)}\n\n`);
 
-  done(null, user._id);
+  done(null, user._id); // Just need a unique ID here I guess
 });
 
 passport.deserializeUser(function(userId, done) {
@@ -159,8 +159,8 @@ passport.deserializeUser(function(userId, done) {
   console.log(`passport.deserializeUser() userId=:\n${userId}\n\n`);
 
   User.findById(userId, (err, user) => {
-    console.log(`passport.deserializeUser() User.findById() callback; user=\n${user}\n\n`);
-    done(err, user);
+    console.log(`passport.deserializeUser() User.findById() callback; user=\n${JSON.stringify(user)}\n\n`);
+    done(err, user); // REVIEW: Should I send entire user object like this or ????
   });
 });
 
@@ -173,7 +173,7 @@ console.log('**************HERE')
   User.findOne({ username })
     .then(user => {
 
-      console.log(`passport use LocalStrategy: User.findOne() callback; user==:\n${user}\nand, use.ValidPassword("${password}")=${user.validPassword(password)}\n`);
+      console.log(`passport use LocalStrategy: User.findOne() callback; user==:\n${JSON.stringify(user)}\nand, use.ValidPassword("${password}")=${user.validPassword(password)}\n`);
 
       if (!user || !user.validPassword(password)) {
         done(null, false, { message: "Invalid username/password" });
